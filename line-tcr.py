@@ -1853,7 +1853,7 @@ def bot(op):
                         pass
                     wait2['readPoint'][msg.to] = msg.id
                     wait2['readMember'][msg.to] = ""
-					wait2['setTime'][msg.to] = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+		    wait2['setTime'][msg.to] = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
                     wait2['ROM'][msg.to] = {}
                     print wait2
             elif msg.text == "sider":
