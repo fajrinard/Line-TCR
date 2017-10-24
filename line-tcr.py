@@ -1012,7 +1012,8 @@ def bot(op):
                 kk.sendMessage(msg)
                 kc.sendMessage(msg)
             elif msg.text in ["Cancel","cancel"]:
-                if msg.toType == 2:
+              if msg.from_ in admin:
+	           if msg.toType == 2:
                     X = cl.getGroup(msg.to)
                     if X.invitee is not None:
                         gInviMids = [contact.mid for contact in X.invitee]
@@ -1836,6 +1837,7 @@ def bot(op):
                         pass
                     wait2['readPoint'][msg.to] = msg.id
                     wait2['readMember'][msg.to] = ""
+					wait2['setTime'][msg.to] = datetime.strftime("%H:%M:%S")
                     wait2['ROM'][msg.to] = {}
                     print wait2
             elif msg.text == "sider":
