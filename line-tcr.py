@@ -1858,7 +1858,7 @@ def bot(op):
                                 print rom
                                 chiya += rom[1] + "\n"
 
-                        cl.sendText(msg.to, "T E R C Y D U K %s\nô€œô€…”Har Harô¿¿\n\nT E R S A N G K A\n%sô€œô€…”Har Harô¿¿\n\nTanggal Dan Waktu Kejadian:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
+                        cl.sendText(msg.to, "T E R C Y D U K\n%s\nT E R S A N G K A\ns%\nTanggal Dan Waktu Kejadian:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
                         cl.sendText(msg.to, "An already read point has not been set.\n [set] to create read point.")
 #-----------------------------------------------
@@ -2365,6 +2365,21 @@ def bot(op):
                         cl.sendText(msg.to,str(e))
                     except:
                         pass
+
+        if op.type == 55:
+            try:
+                if op.param1 in wait2['readPoint']:
+                    Name = cl.getContact(op.param2).displayName
+                    if Name in wait2['readMember'][op.param1]:
+                        pass
+                    else:
+                        wait2['readMember'][op.param1] += "\nãƒ»" + Name
+                        wait2['ROM'][op.param1][op.param2] = "ãƒ»" + Name
+                else:
+                    cl.sendText
+            except:
+                pass
+
         if op.type == 59:
             print op
 
