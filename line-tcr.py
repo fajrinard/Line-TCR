@@ -1023,7 +1023,7 @@ def bot(op):
                             cl.sendText(msg.to,"No one is inviting")
                         else:
                             cl.sendText(msg.to,"Sorry, nobody absent")
-                else:
+                #else:
                     if wait["lang"] == "JP":
                         cl.sendText(msg.to,"Can not be used outside the group")
                     else:
@@ -1829,17 +1829,17 @@ def bot(op):
          #-------------Fungsi Jam Update Finish-------------------#
 
             elif msg.text == "check":
-                    cl.sendText(msg.to, "Checking...")
-                    try:
-                        del wait2['readPoint'][msg.to]
-                        del wait2['readMember'][msg.to]
-                    except:
-                        pass
-                    wait2['readPoint'][msg.to] = msg.id
-                    wait2['readMember'][msg.to] = ""
-					wait2['setTime'][msg.to] = datetime.strftime("%H:%M:%S")
-                    wait2['ROM'][msg.to] = {}
-                    print wait2
+					cl.sendText(msg.to, "Checking...")
+					try:
+						del wait2['readPoint'][msg.to]
+						del wait2['readMember'][msg.to]
+					except:
+					    pass
+					wait2['readPoint'][msg.to] = msg.id
+					wait2['readMember'][msg.to] = ""
+					wait2['setTime'][msg.to] = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+					wait2['ROM'][msg.to] = {}
+					print wait2
             elif msg.text == "sider":
                     if msg.to in wait2['readPoint']:
                         if wait2["ROM"][msg.to].items() == []:
@@ -1852,7 +1852,7 @@ def bot(op):
 
                         cl.sendText(msg.to, "People who readed %s\nthat's it\n\nPeople who have ignored reads\n%sIt is abnormal ♪\n\nReading point creation date n time:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
-                        cl.sendText(msg.to, "An alre	ady read point has not been set.\n「set」you can send ♪ read point will be created ♪")
+                        cl.sendText(msg.to, "An already read point has not been set.\n「set」you can send ♪ read point will be created ♪")
 #-----------------------------------------------
 
 #-----------------------------------------------
