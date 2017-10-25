@@ -30,35 +30,38 @@ sys.setdefaultencoding('utf-8')
 helpMessage =""" Ard Squad bot  􀔃􀄆red check mark􏿿
 
 􀔃􀅕red arrow right􏿿 Command Public
-[Me]       Cek Akun Sendiri
-[My mid]   Cek Akun Mid
-[Bot?]     Cek Akun Bot
-[Id Group] Cek Id Group
-[Ginfo]    Group Info
-[Mid all]   Cek All mid Bot
-[Mid 1/2/3/4] Cek Mid Bot
-[Respon]   Cek Respon Bot
-[Speedbot] Cek Kecepatan Bot
-[Up]       Fungsi Spam Chat
-[Tagall]   Mention Semua User
-[Banlist]  Cek List Akun Banned
-[Gn namagroup] Ganti Nama Group
-[Cancel] Cancel User Masuk Group
-[Set View] Cek Privasi Group
-[Open Url]  Membuka Url Group
-[Close Url] Menutup Url Group
+[Me]       		Cek akun sendiri
+[My mid]   		Cek akun Mid
+[Bot?]     		Cek akun Bot
+[Id Group] 		Cek id group
+[Ginfo]    		Group info
+[Mid all]   	Cek all mid bot
+[Mid 1/2/3/4] 	Cek mid bot
+[Get ready]   	Cek respon Bot
+[Speedbot] 		Cek kecepatan bot
+[Up]       		Fungsi spam chat
+[Tagall]   		Mention semua user
+[Banlist]  		Cek list akun banned
+[Set View] 		Cek menu privasi group
+[set]			Membuat read point
+[sider]			Melihat sider dibawah read point
+[Creator]		Melihat kontak pembuat bot
 
 􀔃􀅕red arrow right􏿿 Command Private
-[Set group] Menggatur Privasi Grup
-[Banned @] Bann Target 
-[Unban @]  Unbann Target
-[Kill @] Kick Target Bann
-[Nk @]   Kick Target User
-[Invite mid] Invite Via Mid
-[Kick mid] Kick Via mid
-[Ard Squad bot] Invite Semua Bot
-[_namabot join] Invite Bot
-[Bye _namabot]  Leave Bot
+[Set group] 	Menggatur privasi grup
+[Gn namagroup] 	Ganti nama group
+[Open Url]  	Membuka url group
+[Close Url] 	Menutup url group
+[Cancel] 		Cancel user masuk group
+[Banned @] 		Bann target 
+[Unban @]  		Unbann target
+[Kill @] 		Kick target banned
+[Nk @]   		Kick target user
+[Invite mid] 	Invite via mid
+[Kick mid] 		Kick via mid
+[Ard Squad bot]	Invite semua bot
+[_namabot join]	Invite bot
+[Bye _namabot] 	Leave bot
 """
 
 Setgroup =""" Private Menu 􀔃􀄆red check mark􏿿
@@ -91,7 +94,7 @@ wait = {
     'message':"Thanks for add me",
     "lang":"JP",
     "comment":"Thanks for add me",
-    "commentOn":False,
+    "commentOn":True,
     "commentBlack":{},
     "wblack":False,
     "dblack":False,
@@ -966,6 +969,11 @@ def bot(op):
                 msg.contentType = 13
                 msg.contentMetadata = {'mid': Hmid}
                 ke.sendMessage(msg)
+            elif msg.text in ["Creator","creator"]:
+                msg.contentType = 13
+                cl.sendText(msg.to, "Created By: FajrinArd")
+                msg.contentMetadata = {'mid': 'ue11fc7860247c63bd3da149613a793f6'}
+                cl.sendMessage(msg)
             elif msg.text in ["Me"]:
                 msg.contentType = 13
                 msg.contentMetadata = {'mid': msg.from_}
@@ -1012,8 +1020,8 @@ def bot(op):
                 kk.sendMessage(msg)
                 kc.sendMessage(msg)
             elif msg.text in ["Cancel","cancel"]:
-              if msg.from_ in admin:
-	           if msg.toType == 2:
+	       if msg.from_ in admin:
+                if msg.toType == 2:
                     X = cl.getGroup(msg.to)
                     if X.invitee is not None:
                         gInviMids = [contact.mid for contact in X.invitee]
@@ -1023,7 +1031,7 @@ def bot(op):
                             cl.sendText(msg.to,"No one is inviting")
                         else:
                             cl.sendText(msg.to,"Sorry, nobody absent")
-                #else:
+                else:
                     if wait["lang"] == "JP":
                         cl.sendText(msg.to,"Can not be used outside the group")
                     else:
@@ -1703,7 +1711,7 @@ def bot(op):
                         cl.sendText(msg.to,"done")
                     else:
                         cl.sendText(msg.to,"è¦�äº†å¼€ã€‚")
-            elif msg.text in ["ã‚³ãƒ¡ãƒ³ãƒˆ:ã‚ªãƒ•","Comment on","Comment off","è‡ªå‹•é¦–é �ç•™è¨€ï¼šé—œ"]:
+            elif msg.text in ["ã‚³ãƒ¡ãƒ³ãƒˆ:ã‚ªãƒ•","comment off","Comment off","è‡ªå‹•é¦–é �ç•™è¨€ï¼šé—œ"]:
                 if wait["commentOn"] == False:
                     if wait["lang"] == "JP":
                         cl.sendText(msg.to,"done")
@@ -1828,8 +1836,8 @@ def bot(op):
                     kc.sendText(msg.to,"Aktifkan jam terlebih dulu")
          #-------------Fungsi Jam Update Finish-------------------#
 
-            elif msg.text == "check":
-					cl.sendText(msg.to, "Checking...")
+            elif msg.text == "set":
+					cl.sendText(msg.to, "Read point.")
 					try:
 						del wait2['readPoint'][msg.to]
 						del wait2['readMember'][msg.to]
@@ -1837,7 +1845,7 @@ def bot(op):
 					    pass
 					wait2['readPoint'][msg.to] = msg.id
 					wait2['readMember'][msg.to] = ""
-					wait2['setTime'][msg.to] = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+					wait2['setTime'][msg.to] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 					wait2['ROM'][msg.to] = {}
 					print wait2
             elif msg.text == "sider":
@@ -1850,9 +1858,9 @@ def bot(op):
                                 print rom
                                 chiya += rom[1] + "\n"
 
-                        cl.sendText(msg.to, "People who readed %s\nthat's it\n\nPeople who have ignored reads\n%sIt is abnormal ♪\n\nReading point creation date n time:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
+                        cl.sendText(msg.to, "T E R C Y D U K %s\nô€œô€…”Har Harô¿¿\n\nT E R S A N G K A\n%sô€œô€…”Har Harô¿¿\n\nTanggal Dan Waktu Kejadian:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
-                        cl.sendText(msg.to, "An already read point has not been set.\n「set」you can send ♪ read point will be created ♪")
+                        cl.sendText(msg.to, "An already read point has not been set.\n [set] to create read point.")
 #-----------------------------------------------
 
 #-----------------------------------------------
@@ -2246,11 +2254,11 @@ def bot(op):
 #-----------------------------------------------
 
        #-------------Fungsi Respon Start---------------------#
-            elif msg.text in ["get ready"]:
-                cl.sendText(msg.to,"i'm ready")
-                ki.sendText(msg.to,"i'm ready")
-                kk.sendText(msg.to,"i'm ready")
-                kc.sendText(msg.to,"i'm ready")
+            elif msg.text in ["Get ready"]:
+                cl.sendText(msg.to,"I'm ready")
+                ki.sendText(msg.to,"I'm ready")
+                kk.sendText(msg.to,"I'm ready")
+                kc.sendText(msg.to,"I'm ready")
       #-------------Fungsi Respon Finish---------------------#
 
       #-------------Fungsi Balesan Respon Start---------------------#
@@ -2424,6 +2432,26 @@ def nameUpdate():
         except:
             pass
 thread2 = threading.Thread(target=nameUpdate)
+thread2.daemon = True
+thread2.start()
+
+def autolike():
+     for zx in range(0,20):
+        hasil = cl.activity(limit=200)
+        if hasil['result']['posts'][zx]['postInfo']['liked'] == False:
+          try:    
+			cl.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
+			cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like by\nline.me/ti/p/~ardfajrin")
+			ki.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
+			kk.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
+			kc.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
+			print "Like"
+          except:
+            pass
+        else:
+            print "Already Liked"
+     time.sleep(500)
+thread2 = threading.Thread(target=autolike)
 thread2.daemon = True
 thread2.start()
 
