@@ -2377,8 +2377,8 @@ def bot(op):
                     if Name in wait2['readMember'][op.param1]:
                         pass
                     else:
-                        wait2['readMember'][op.param1] += "\nãƒ»" + Name
-                        wait2['ROM'][op.param1][op.param2] = "ãƒ»" + Name
+                        wait2['readMember'][op.param1] += "- " + Name
+                        wait2['ROM'][op.param1][op.param2] = "- " + Name
                 else:
                     cl.sendText
             except:
