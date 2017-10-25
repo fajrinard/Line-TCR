@@ -35,9 +35,9 @@ helpMessage =""" Ard Squad bot  􀔃􀄆red check mark􏿿
 [Bot?]     		Cek akun Bot
 [Id Group] 		Cek id group
 [Ginfo]    		Group info
-[Mid all]   	Cek all mid bot
-[Mid 1/2/3/4] 	Cek mid bot
-[Get ready]   	Cek respon Bot
+[Mid all]   		Cek all mid bot
+[Mid 1/2/3/4] 		Cek mid bot
+[Get ready]   		Cek respon Bot
 [Speedbot] 		Cek kecepatan bot
 [Up]       		Fungsi spam chat
 [Tagall]   		Mention semua user
@@ -82,8 +82,8 @@ Amid = ki.getProfile().mid
 Bmid = kk.getProfile().mid
 Cmid = kc.getProfile().mid
 
-Bots=[mid,Amid,Bmid,Cmid,"ue11fc7860247c63bd3da149613a793f6"]
-admin=["ue11fc7860247c63bd3da149613a793f6"]
+Bots=[mid,Amid,Bmid,Cmid,"PLACE_YOUR_MID"]
+admin=["PLACE_YOUR_MID"]
 wait = {
     'contact':False,
     'autoJoin':True,
@@ -99,16 +99,10 @@ wait = {
     "wblack":False,
     "dblack":False,
     "clock":False,
-    "cName":" ",
-    "cName2":"[R.A]_SX2 ",
-    "cName3":"[R.A]_SX3 ",
-    "cName4":"[R.A]_SX4 ",
-    "cName5":"[R.A]_SX5 ",
-    "cName6":"[R.A]_SX6 ",
-    "cName7":"[R.A]_SX7 ",
-    "cName8":"[R.A]_SX8 ",
-    "cName9":"[R.A]_SX9 ",
-    "cName10":"[R.A]_SX10 ",
+    "cName":"",
+    "cName2":"",
+    "cName3":"",
+    "cName4":"",
     "blacklist":{},
     "wblacklist":False,
     "dblacklist":False,
