@@ -54,8 +54,8 @@ helpMessage =""" Ard Squad bot  􀔃􀄆red check mark􏿿
 􀔃􀅕red arrow right􏿿 Command Private
 [Set group] 	Menggatur privasi grup
 [Gn namagroup] 	Ganti nama group
-[Open Url]  	Membuka url group
-[Close Url] 	Menutup url group
+[Open url]  	Membuka url group
+[Close url] 	Menutup url group
 [Cancel] 		Cancel user masuk group
 [Banned @] 		Bann target 
 [Unban @]  		Unbann target
@@ -63,7 +63,7 @@ helpMessage =""" Ard Squad bot  􀔃􀄆red check mark􏿿
 [Nk @]   		Kick target user
 [Invite mid] 	Invite via mid
 [Kick mid] 		Kick via mid
-[Ard Squad bot]	Invite semua bot
+[Ard Squad join]	Invite semua bot
 [_namabot join]	Invite bot
 [Bye _namabot] 	Leave bot
 """
@@ -87,14 +87,14 @@ Bmid = kk.getProfile().mid
 Cmid = kc.getProfile().mid
 
 Bots=[mid,Amid,Bmid,Cmid,"ue11fc7860247c63bd3da149613a793f6"]
-admin=["ue11fc7860247c63bd3da149613a793f6","u238c8b46c8c4a80504f6eafdf45fcb5f"]
+admin=["ue11fc7860247c63bd3da149613a793f6","u238c8b46c8c4a80504f6eafdf45fcb5f","u01eace9266a337dcc360b7bb7448b907"]
 wait = {
     'contact':False,
     'autoJoin':True,
     'autoCancel':{"on":True,"members":1},
     'leaveRoom':True,
     'timeline':False,
-    'autoAdd':False,
+    'autoAdd':True,
     'message':"Thanks for add me",
     "lang":"JP",
     "comment":"Thanks for add me",
@@ -116,7 +116,7 @@ wait = {
     "blacklist":{},
     "wblacklist":False,
     "dblacklist":False,
-    "Protectgr":False,
+    "Protectgr":True,
     "Protectjoin":False,
     "Protectcancl":False,
     "protectionOn":True,
