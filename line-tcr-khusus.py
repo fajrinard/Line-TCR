@@ -57,9 +57,9 @@ helpMessage =""" Ard Squad bot  􀔃􀄆red check mark􏿿
 [Open url]  	Membuka url group
 [Close url] 	Menutup url group
 [Cancel] 		Cancel user masuk group
-[Admin add @]	Menambah user admin
-[Admin remove @] Menghapus user dari admin
-[Adminlist]		Melihat daftar admin
+[Staff add @]	Menambah user admin
+[Staff remove @] Menghapus user dari admin
+[Stafflist]		Melihat daftar admin
 [Banned @] 		Bann target 
 [Unban @]  		Unbann target
 [Kill @] 		Kick target banned
@@ -2393,7 +2393,7 @@ def bot(op):
                         for target in targets:
                             try:
                                 admin.append(target)
-                                cl.sendText(msg.to,"Staff Ditambahkan")
+                                cl.sendText(msg.to,"Staff added")
                             except:
                                 pass
                     print "[Command]Staff add executed"
@@ -2420,7 +2420,7 @@ def bot(op):
                         for target in targets:
                             try:
                                 admin.remove(target)
-                                cl.sendText(msg.to,"Admin Dihapus")
+                                cl.sendText(msg.to,"Staff deleted")
                             except:
                                 pass
                     print "[Command]Staff remove executed"
@@ -2428,7 +2428,7 @@ def bot(op):
                     cl.sendText(msg.to,"Command denied.")
                     cl.sendText(msg.to,"Admin permission required.")
 
-            elif msg.text in ["Adminlist","stafflist"]:
+            elif msg.text in ["Stafflist","stafflist"]:
                 if admin == []:
                     cl.sendText(msg.to,"The stafflist is empty")
                 else:
