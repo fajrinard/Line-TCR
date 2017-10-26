@@ -57,6 +57,9 @@ helpMessage =""" Ard Squad bot  􀔃􀄆red check mark􏿿
 [Open url]  	Membuka url group
 [Close url] 	Menutup url group
 [Cancel] 		Cancel user masuk group
+[Admin add @]	Menambah user admin
+[Admin remove @] Menghapus user dari admin
+[Adminlist]		Melihat daftar admin
 [Banned @] 		Bann target 
 [Unban @]  		Unbann target
 [Kill @] 		Kick target banned
@@ -88,6 +91,7 @@ Cmid = kc.getProfile().mid
 
 Bots=[mid,Amid,Bmid,Cmid,"ue11fc7860247c63bd3da149613a793f6"]
 admin=["ue11fc7860247c63bd3da149613a793f6","u238c8b46c8c4a80504f6eafdf45fcb5f","u01eace9266a337dcc360b7bb7448b907"]
+admsa=["ue11fc7860247c63bd3da149613a793f6"]
 wait = {
     'contact':False,
     'autoJoin':True,
@@ -2370,6 +2374,71 @@ def bot(op):
                     except:
                         pass
 
+            elif "Staff add @" in msg.text:
+                if msg.from_ in admsa:
+                    print "[Command]Staff add executing"
+                    _name = msg.text.replace("Staff add @","")
+                    _nametarget = _name.rstrip('  ')
+                    gs = cl.getGroup(msg.to)
+                    gs = ki.getGroup(msg.to)
+                    gs = kk.getGroup(msg.to)
+                    gs = kc.getGroup(msg.to)
+                    targets = []
+                    for g in gs.members:
+                        if _nametarget == g.displayName:
+                            targets.append(g.mid)
+                    if targets == []:
+                        ki.sendText(msg.to,"Contact not found")
+                    else:
+                        for target in targets:
+                            try:
+                                admin.append(target)
+                                cl.sendText(msg.to,"Staff Ditambahkan")
+                            except:
+                                pass
+                    print "[Command]Staff add executed"
+                else:
+                    cl.sendText(msg.to,"Command denied.")
+                    cl.sendText(msg.to,"Admin permission required.")
+
+            elif "Staff remove @" in msg.text:
+                if msg.from_ in admsa:
+                    print "[Command]Staff remove executing"
+                    _name = msg.text.replace("Staff remove @","")
+                    _nametarget = _name.rstrip('  ')
+                    gs = cl.getGroup(msg.to)
+                    gs = ki.getGroup(msg.to)
+                    gs = kk.getGroup(msg.to)
+                    gs = kc.getGroup(msg.to)
+                    targets = []
+                    for g in gs.members:
+                        if _nametarget == g.displayName:
+                            targets.append(g.mid)
+                    if targets == []:
+                        ki.sendText(msg.to,"Contact not found")
+                    else:
+                        for target in targets:
+                            try:
+                                admin.remove(target)
+                                cl.sendText(msg.to,"Admin Dihapus")
+                            except:
+                                pass
+                    print "[Command]Staff remove executed"
+                else:
+                    cl.sendText(msg.to,"Command denied.")
+                    cl.sendText(msg.to,"Admin permission required.")
+
+            elif msg.text in ["Adminlist","stafflist"]:
+                if admin == []:
+                    cl.sendText(msg.to,"The stafflist is empty")
+                else:
+                    cl.sendText(msg.to,"please wait...")
+                    mc = ""
+                    for mi_d in admin:
+                        mc += "->" +cl.getContact(mi_d).displayName + "\n"
+                    cl.sendText(msg.to,mc)
+                    print "[Command]Stafflist executed"
+						
         if op.type == 55:
             try:
                 if op.param1 in wait2['readPoint']:
