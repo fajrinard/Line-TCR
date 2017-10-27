@@ -92,7 +92,7 @@ Bmid = kk.getProfile().mid
 Cmid = kc.getProfile().mid
 
 Bots=[mid,Amid,Bmid,Cmid,"YOUR_MID"]
-admin=["YOUR_MID"]
+admin=["ua900e1ba4a91a01b7de658f26471c510"]
 admsa=["YOUR_MID"]
 wait = {
     'contact':False,
