@@ -10,19 +10,19 @@ import time,random,sys,json,codecs,threading,glob,re
 #kk.loginResult()
 
 cl = LINETCR.LINE()
-cl.login(qr=true)
+cl.login(qr=True)
 cl.loginResult()
 
 ki = LINETCR.LINE()
-ki.login(qr=true)
+ki.login(qr=True)
 ki.loginResult()
 
 kk = LINETCR.LINE()
-kk.login(qr=true)
+kk.login(qr=True)
 kk.loginResult()
 
 kc = LINETCR.LINE()
-kc.login(qr=true)
+kc.login(qr=True)
 kc.loginResult()
 
 cl
@@ -92,7 +92,7 @@ Bmid = kk.getProfile().mid
 Cmid = kc.getProfile().mid
 
 Bots=[mid,Amid,Bmid,Cmid,"ue11fc7860247c63bd3da149613a793f6"]
-admin=["ue11fc7860247c63bd3da149613a793f6","u238c8b46c8c4a80504f6eafdf45fcb5f"]
+admin=["ue11fc7860247c63bd3da149613a793f6"]
 admsa=["ue11fc7860247c63bd3da149613a793f6"]
 wait = {
     'contact':False,
