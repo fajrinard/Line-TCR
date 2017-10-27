@@ -11,15 +11,19 @@ import time,random,sys,json,codecs,threading,glob,re
 
 cl = LINETCR.LINE()
 cl.login(qr=True)
+cl.loginResult()
 
 ki = LINETCR.LINE()
 ki.login(qr=True)
+ki.loginResult()
 
 kk = LINETCR.LINE()
 kk.login(qr=True)
+kk.loginResult()
 
 kc = LINETCR.LINE()
 kc.login(qr=True)
+kc.loginResult()
 
 cl
 
@@ -30,38 +34,43 @@ sys.setdefaultencoding('utf-8')
 helpMessage =""" Ard Squad bot  􀔃􀄆red check mark􏿿
 
 􀔃􀅕red arrow right􏿿 Command Public
-[Me]       		Cek akun sendiri
-[My mid]   		Cek akun Mid
-[Bot?]     		Cek akun Bot
-[Id Group] 		Cek id group
-[Ginfo]    		Group info
-[Mid all]   		Cek all mid bot
-[Mid 1/2/3/4] 		Cek mid bot
-[Get ready]   		Cek respon Bot
-[Speedbot] 		Cek kecepatan bot
-[Up]       		Fungsi spam chat
-[Tagall]   		Mention semua user
-[Banlist]  		Cek list akun banned
-[Set View] 		Cek menu privasi group
-[set]			Membuat read point
-[sider]			Melihat sider dibawah read point
-[Creator]		Melihat kontak pembuat bot
+[Me] = Cek akun sendiri
+[My mid] = Cek akun Mid
+[Bot?] = Cek akun Bot
+[Id Group] = Cek id group
+[Ginfo] = Group info
+[Mid all] = Cek all mid bot
+[Mid 1/2/3/4] = Cek mid bot
+[Get ready] = Cek respon Bot
+[Speedbot] = Cek kecepatan bot
+[Up] = Fungsi spam chat
+[Tagall] = Mention semua user
+[Banlist] = Cek list akun banned
+[Set View] = Cek menu privasi group
+[cek] = Membuat set point
+[sider] = Melihat sider dibawah read point
+[Creator] = Melihat kontak pembuat bot
 
 􀔃􀅕red arrow right􏿿 Command Private
-[Set group] 	Menggatur privasi grup
-[Gn namagroup] 	Ganti nama group
-[Open Url]  	Membuka url group
-[Close Url] 	Menutup url group
-[Cancel] 		Cancel user masuk group
-[Banned @] 		Bann target 
-[Unban @]  		Unbann target
-[Kill @] 		Kick target banned
-[Nk @]   		Kick target user
-[Invite mid] 	Invite via mid
-[Kick mid] 		Kick via mid
-[Ard Squad bot]	Invite semua bot
-[_namabot join]	Invite bot
-[Bye _namabot] 	Leave bot
+[Set group] = Menggatur privasi grup
+[Gn namagroup] = Ganti nama group
+[Open url] = Membuka url group
+[Close url] = Menutup url group
+[Cancel] = Cancel user masuk group
+[Staff add @] = Menambah user admin
+[Staff remove @] = Menghapus user dari admin
+[Stafflist] = Melihat daftar admin
+[Ban @] = Ban target with mention
+[Ban] = Ban target with send contact 
+[Unban @] = Unban target with mention
+[Unban] = Unban target with send contact
+[Kill @] = Kick target banned
+[Nk @] = Kick target user
+[Invite mid] = Invite via mid
+[Kick mid] = Kick via mid
+[Ard Squad join] = Invite semua bot
+[_namabot join] = Invite bot
+[Bye _namabot] = Leave bot
 """
 
 Setgroup =""" Private Menu 􀔃􀄆red check mark􏿿
@@ -82,15 +91,16 @@ Amid = ki.getProfile().mid
 Bmid = kk.getProfile().mid
 Cmid = kc.getProfile().mid
 
-Bots=[mid,Amid,Bmid,Cmid,"PLACE_YOUR_MID"]
-admin=["PLACE_YOUR_MID"]
+Bots=[mid,Amid,Bmid,Cmid,"YOUR_MID"]
+admin=["YOUR_MID"]
+admsa=["YOUR_MID"]
 wait = {
     'contact':False,
     'autoJoin':True,
     'autoCancel':{"on":True,"members":1},
     'leaveRoom':True,
     'timeline':False,
-    'autoAdd':False,
+    'autoAdd':True,
     'message':"Thanks for add me",
     "lang":"JP",
     "comment":"Thanks for add me",
@@ -99,14 +109,14 @@ wait = {
     "wblack":False,
     "dblack":False,
     "clock":False,
-    "cName":"",
-    "cName2":"",
-    "cName3":"",
-    "cName4":"",
+    "cName":"Ard",
+    "cName2":"Ard 1",
+    "cName3":"Ard 2",
+    "cName4":"Ard 3",
     "blacklist":{},
     "wblacklist":False,
     "dblacklist":False,
-    "Protectgr":False,
+    "Protectgr":True,
     "Protectjoin":False,
     "Protectcancl":False,
     "protectionOn":True,
@@ -132,7 +142,7 @@ def sendMessage(to, text, contentMetadata={}, contentType=0):
     if to not in messageReq:
         messageReq[to] = -1
     messageReq[to] += 1
-
+	
 def NOTIFIED_READ_MESSAGE(op):
     try:
         if op.param1 in wait2['readPoint']:
@@ -152,9 +162,9 @@ def RECEIVE_MESSAGE(op):
     try:
         if msg.contentType == 0:
             try:
-                if msg.to in wait2['readPoint']:
-                    if msg.from_ in wait2["ROM"][msg.to]:
-                        del wait2["ROM"][msg.to][msg.from_]
+                if msg.to in wait['readPoint']:
+                    if msg.from_ in wait["ROM"][msg.to]:
+                        del wait["ROM"][msg.to][msg.from_]
                 else:
                     pass
             except:
@@ -790,40 +800,40 @@ def bot(op):
             if msg.contentType == 13:
                if wait["wblack"] == True:
                     if msg.contentMetadata["mid"] in wait["commentBlack"]:
-                        cl.sendText(msg.to,"already")
+                        cl.sendText(msg.to,"Already in blacklist")
                         wait["wblack"] = False
                     else:
                         wait["commentBlack"][msg.contentMetadata["mid"]] = True
                         wait["wblack"] = False
-                        cl.sendText(msg.to,"decided not to comment")
+                        cl.sendText(msg.to,"Decided not to comment.")
 
                elif wait["dblack"] == True:
                    if msg.contentMetadata["mid"] in wait["commentBlack"]:
                         del wait["commentBlack"][msg.contentMetadata["mid"]]
-                        cl.sendText(msg.to,"deleted")
+                        cl.sendText(msg.to,"Removed from blacklist.")
                         wait["dblack"] = False
 
                    else:
                         wait["dblack"] = False
-                        cl.sendText(msg.to,"It is not in the black list")
+                        cl.sendText(msg.to,"There's no target in blacklist.")
                elif wait["wblacklist"] == True:
                    if msg.contentMetadata["mid"] in wait["blacklist"]:
-                        cl.sendText(msg.to,"already")
+                        cl.sendText(msg.to,"Already in blacklist")
                         wait["wblacklist"] = False
                    else:
                         wait["blacklist"][msg.contentMetadata["mid"]] = True
                         wait["wblacklist"] = False
-                        cl.sendText(msg.to,"aded")
+                        cl.sendText(msg.to,"Added to blacklist.")
 
                elif wait["dblacklist"] == True:
                    if msg.contentMetadata["mid"] in wait["blacklist"]:
                         del wait["blacklist"][msg.contentMetadata["mid"]]
-                        cl.sendText(msg.to,"deleted")
+                        cl.sendText(msg.to,"Removed from blacklist.")
                         wait["dblacklist"] = False
 
                    else:
                         wait["dblacklist"] = False
-                        cl.sendText(msg.to,"It is not in the black list")
+                        cl.sendText(msg.to,"There's no target in blacklist.")
                elif wait["contact"] == True:
                     msg.contentType = 0
                     cl.sendText(msg.to,msg.contentMetadata["mid"])
@@ -1830,18 +1840,19 @@ def bot(op):
                     kc.sendText(msg.to,"Aktifkan jam terlebih dulu")
          #-------------Fungsi Jam Update Finish-------------------#
 
-            elif msg.text == "set":
-					cl.sendText(msg.to, "Read point.")
-					try:
-						del wait2['readPoint'][msg.to]
-						del wait2['readMember'][msg.to]
-					except:
-					    pass
-					wait2['readPoint'][msg.to] = msg.id
-					wait2['readMember'][msg.to] = ""
-					wait2['setTime'][msg.to] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-					wait2['ROM'][msg.to] = {}
-					print wait2
+            elif msg.text == "cek":
+                    ki.sendText(msg.to, "Set point.")
+                    try:
+                        del wait2['readPoint'][msg.to]
+                        del wait2['readMember'][msg.to]
+                    except:
+                           pass
+                    now2 = datetime.now()
+                    wait2['readPoint'][msg.to] = msg.id
+                    wait2['readMember'][msg.to] = ""
+                    wait2['setTime'][msg.to] = datetime.now().strftime('%Y-%m-%d %H:%M')
+                    wait2['ROM'][msg.to] = {}
+                    print wait2
             elif msg.text == "sider":
                     if msg.to in wait2['readPoint']:
                         if wait2["ROM"][msg.to].items() == []:
@@ -1852,9 +1863,9 @@ def bot(op):
                                 print rom
                                 chiya += rom[1] + "\n"
 
-                        cl.sendText(msg.to, "T E R C Y D U K\n%s\nT E R S A N G K A\ns%\nTanggal Dan Waktu Kejadian:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
+                        ki.sendText(msg.to, "T E R C Y D U K\n%s\n\nT E R S A N G K A\n%s\nDate and time:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
-                        cl.sendText(msg.to, "An already read point has not been set.\n [set] to create read point.")
+                        ki.sendText(msg.to, "Type 'cek' to set point.")
 #-----------------------------------------------
 
 #-----------------------------------------------
@@ -2104,42 +2115,41 @@ def bot(op):
                         pass
                     else:
                         for target in targets:
-	                   if target not in Bots:
-                            try:
-                                klist=[cl,ki,kk,kc]
-                                kicker=random.choice(klist)
-                                kicker.kickoutFromGroup(msg.to,[target])
-                                print (msg.to,[g.mid])
-                            except:
-                                ki.sendText(msg.to,"Good bye")
+						  if targets not in Bots:
+								try:
+									klist=[cl,ki,kk,kc]
+									kicker=random.choice(klist)
+									kicker.kickoutFromGroup(msg.to,[target])
+									print (msg.to,[g.mid])
+								except:
+									ki.sendText(msg.to,"Good bye")
         #----------------Fungsi Kick User Target Finish----------------------#      
-            elif "Blacklist @ " in msg.text:
-                _name = msg.text.replace("Blacklist @ ","")
-                _kicktarget = _name.rstrip(' ')
-                gs = ki2.getGroup(msg.to)
-                targets = []
-                for g in gs.members:
-                    if _kicktarget == g.displayName:
-                        targets.append(g.mid)
-                        if targets == []:
-                            cl.sendText(msg.to,"Not found")
-                        else:
-                            for target in targets:
-		               if target not in Bots:
-                                try:
-                                    wait["blacklist"][target] = True
-                                    f=codecs.open('st2__b.json','w','utf-8')
-                                    json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
-                                    k3.sendText(msg.to,"Blacklisted")
-                                except:
-                                    ki.sendText(msg.to,"error")
+            #elif "Blacklist @" in msg.text:
+                #_name = msg.text.replace("Blacklist @","")
+                #_kicktarget = _name.rstrip(' ')
+                #gs = ki2.getGroup(msg.to)
+                #targets = []
+                #for g in gs.members:
+                    #if _kicktarget == g.displayName:
+                        #targets.append(g.mid)
+                        #if targets == []:
+                            #cl.sendText(msg.to,"Not found")
+                        #else:
+                            #for target in targets:
+                                #try:
+                                    #wait["blacklist"][target] = True
+                                    #f=codecs.open('st2__b.json','w','utf-8')
+                                    #json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
+                                    #k3.sendText(msg.to,"Target locked.")
+                                #except:
+                                    #ki.sendText(msg.to,"error")
             
             #----------------Fungsi Banned User Target Start-----------------------#
             elif "Ban @" in msg.text:
               if msg.from_ in admin:
                 if msg.toType == 2:
-                    print "[Banned] Sukses"
-                    _name = msg.text.replace("Banned @","")
+                    print "[Banned] executed"
+                    _name = msg.text.replace("Ban @","")
                     _nametarget = _name.rstrip('  ')
                     gs = cl.getGroup(msg.to)
                     gs = ki.getGroup(msg.to)
@@ -2153,21 +2163,21 @@ def bot(op):
                         cl.sendText(msg.to,"Can't ban bot")
                     else:
                         for target in targets:
-			   if target not in Bots:
                             try:
-                                wait["blacklist"][target] = True
-                                f=codecs.open('st2__b.json','w','utf-8')
-                                json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
-                                cl.sendText(msg.to,"Banned")
+								wait["blacklist"][target] = True
+								f=codecs.open('st2__b.json','w','utf-8')
+								json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
+								cl.sendText(msg.to,"Target locked.")
+								print "[Banned] success"
                             except:
-                                ki.sendText(msg.to,"Error")
+                                ki.sendText(msg.to,"Target already in blacklist.")
             #----------------Fungsi Banned User Target Finish-----------------------# 
             
             #----------------Fungsi Unbanned User Target Start-----------------------#
             elif "Unban @" in msg.text:
               if msg.from_ in admin:
                 if msg.toType == 2:
-                    print "[Unban] Sukses"
+                    print "[Unban] executed"
                     _name = msg.text.replace("Unban @","")
                     _nametarget = _name.rstrip('  ')
                     gs = cl.getGroup(msg.to)
@@ -2179,16 +2189,17 @@ def bot(op):
                         if _nametarget == g.displayName:
                             targets.append(g.mid)
                     if targets == []:
-                        cl.sendText(msg.to,"Tidak Ditemukan.....")
+                        cl.sendText(msg.to,"Target not found")
                     else:
                         for target in targets:
                             try:
-                                del wait["blacklist"][target]
-                                f=codecs.open('st2__b.json','w','utf-8')
-                                json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
-                                cl.sendText(msg.to,"Akun Bersih Kembali")
+								del wait["blacklist"][target]
+								f=codecs.open('st2__b.json','w','utf-8')
+								json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
+								cl.sendText(msg.to,"Target cleaned.")
+								print "[Unban] success"
                             except:
-                                ki.sendText(msg.to,"Error")
+                                ki.sendText(msg.to,"There's no target in blacklist.")
            #----------------Fungsi Unbanned User Target Finish-----------------------#
            
         #-------------Fungsi Spam Start---------------------#
@@ -2266,16 +2277,18 @@ def bot(op):
                 start = time.time()
                 cl.sendText(msg.to, "please wait...")
                 elapsed_time = time.time() - start
-                cl.sendText(msg.to, "%sseconds" % (elapsed_time))
+                cl.sendText(msg.to, "%ss" % (elapsed_time))
       #-------------Fungsi Speedbot Finish---------------------#
 
       #-------------Fungsi Banned Send Contact Start------------------#
             elif msg.text in ["Ban"]:
-                wait["wblacklist"] = True
-                cl.sendText(msg.to,"send contact")
+	          if msg.from_ in admin:
+				wait["wblacklist"] = True
+				cl.sendText(msg.to,"send contact")
             elif msg.text in ["Unban"]:
-                wait["dblacklist"] = True
-                cl.sendText(msg.to,"send contact")
+			  if msg.from_ in admin:
+				wait["dblacklist"] = True
+				cl.sendText(msg.to,"send contact")
       #-------------Fungsi Banned Send Contact Finish------------------#
       
       #-------------Fungsi Bannlist Start------------------#          
@@ -2302,28 +2315,30 @@ def bot(op):
                         cocoa += mm + "\n"
                     cl.sendText(msg.to,cocoa + "")
             elif msg.text in ["Kill ban"]:
-                if msg.toType == 2:
-                    group = cl.getGroup(msg.to)
-                    gMembMids = [contact.mid for contact in group.members]
-                    matched_list = []
-                    for tag in wait["blacklist"]:
-                        matched_list+=filter(lambda str: str == tag, gMembMids)
-                    if matched_list == []:
-                        cl.sendText(msg.to,"There was no blacklist user")
-                        return
-                    for jj in matched_list:
-                        cl.kickoutFromGroup(msg.to,[jj])
-                        ki.kickoutFromGroup(msg.to,[jj])
-                        kk.kickoutFromGroup(msg.to,[jj])
-                        kc.kickoutFromGroup(msg.to,[jj])
-                    cl.sendText(msg.to,"Blacklist emang pantas tuk di usir")
+			  if msg.from_ in admin:
+				if msg.toType == 2:
+					group = cl.getGroup(msg.to)
+					gMembMids = [contact.mid for contact in group.members]
+					matched_list = []
+					for tag in wait["blacklist"]:
+						matched_list+=filter(lambda str: str == tag, gMembMids)
+					if matched_list == []:
+						cl.sendText(msg.to,"There was no blacklist user")
+						return
+					for jj in matched_list:
+						cl.sendText(msg.to,"Good bye.")
+						cl.kickoutFromGroup(msg.to,[jj])
+						ki.kickoutFromGroup(msg.to,[jj])
+						kk.kickoutFromGroup(msg.to,[jj])
+						kc.kickoutFromGroup(msg.to,[jj])
             elif msg.text in ["Clear"]:
-                if msg.toType == 2:
-                    group = cl.getGroup(msg.to)
-                    gMembMids = [contact.mid for contact in group.invitee]
-                    for _mid in gMembMids:
-                        cl.cancelGroupInvitation(msg.to,[_mid])
-                    cl.sendText(msg.to,"I pretended to cancel and canceled.")
+			  if msg.from_ in admin:
+				if msg.toType == 2:
+					group = cl.getGroup(msg.to)
+					gMembMids = [contact.mid for contact in group.invitee]
+					for _mid in gMembMids:
+						cl.cancelGroupInvitation(msg.to,[_mid])
+						cl.sendText(msg.to,"I pretended to cancel and canceled.")
             elif "random: " in msg.text:
               if msg.from_ in admin:
                 if msg.toType == 2:
@@ -2360,17 +2375,82 @@ def bot(op):
                     except:
                         pass
 
+            elif "Staff add @" in msg.text:
+                if msg.from_ in admsa:
+                    print "[Command]Staff add executing"
+                    _name = msg.text.replace("Staff add @","")
+                    _nametarget = _name.rstrip('  ')
+                    gs = cl.getGroup(msg.to)
+                    gs = ki.getGroup(msg.to)
+                    gs = kk.getGroup(msg.to)
+                    gs = kc.getGroup(msg.to)
+                    targets = []
+                    for g in gs.members:
+                        if _nametarget == g.displayName:
+                            targets.append(g.mid)
+                    if targets == []:
+                        ki.sendText(msg.to,"Contact not found")
+                    else:
+                        for target in targets:
+                            try:
+                                admin.append(target)
+                                cl.sendText(msg.to,"Staff added")
+                            except:
+                                pass
+                    print "[Command]Staff add executed"
+                else:
+                    cl.sendText(msg.to,"Command denied.")
+                    cl.sendText(msg.to,"Admin permission required.")
+
+            elif "Staff remove @" in msg.text:
+                if msg.from_ in admsa:
+                    print "[Command]Staff remove executing"
+                    _name = msg.text.replace("Staff remove @","")
+                    _nametarget = _name.rstrip('  ')
+                    gs = cl.getGroup(msg.to)
+                    gs = ki.getGroup(msg.to)
+                    gs = kk.getGroup(msg.to)
+                    gs = kc.getGroup(msg.to)
+                    targets = []
+                    for g in gs.members:
+                        if _nametarget == g.displayName:
+                            targets.append(g.mid)
+                    if targets == []:
+                        ki.sendText(msg.to,"Contact not found")
+                    else:
+                        for target in targets:
+                            try:
+                                admin.remove(target)
+                                cl.sendText(msg.to,"Staff deleted")
+                            except:
+                                pass
+                    print "[Command]Staff remove executed"
+                else:
+                    cl.sendText(msg.to,"Command denied.")
+                    cl.sendText(msg.to,"Admin permission required.")
+
+            elif msg.text in ["Stafflist","stafflist"]:
+                if admin == []:
+                    cl.sendText(msg.to,"The stafflist is empty")
+                else:
+                    cl.sendText(msg.to,"please wait...")
+                    mc = ""
+                    for mi_d in admin:
+                        mc += "->" +cl.getContact(mi_d).displayName + "\n"
+                    cl.sendText(msg.to,mc)
+                    print "[Command]Stafflist executed"
+						
         if op.type == 55:
             try:
-                if op.param1 in wait2['readPoint']:
-                    Name = cl.getContact(op.param2).displayName
-                    if Name in wait2['readMember'][op.param1]:
-                        pass
-                    else:
-                        wait2['readMember'][op.param1] += "\nãƒ»" + Name
-                        wait2['ROM'][op.param1][op.param2] = "ãƒ»" + Name
-                else:
-                    cl.sendText
+				if op.param1 in wait2['readPoint']:
+					Name = cl.getContact(op.param2).displayName
+					if Name in wait2['readMember'][op.param1]:
+						pass
+					else:
+						wait2['readMember'][op.param1] += "- " + Name
+						wait2['ROM'][op.param1][op.param2] = "- " + Name
+				else:
+					cl.sendText
             except:
                 pass
 
