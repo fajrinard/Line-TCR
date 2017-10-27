@@ -1841,7 +1841,7 @@ def bot(op):
          #-------------Fungsi Jam Update Finish-------------------#
 
             elif msg.text == "cek":
-                    ki.sendText(msg.to, "Set point.")
+                    cl.sendText(msg.to, "Set point.")
                     try:
                         del wait2['readPoint'][msg.to]
                         del wait2['readMember'][msg.to]
@@ -1863,9 +1863,9 @@ def bot(op):
                                 print rom
                                 chiya += rom[1] + "\n"
 
-                        ki.sendText(msg.to, "T E R C Y D U K\n%s\n\nT E R S A N G K A\n%s\nDate and time:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
+                        cl.sendText(msg.to, "T E R C Y D U K\n%s\n\nT E R S A N G K A\n%s\nDate and time:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
-                        ki.sendText(msg.to, "Type 'cek' to set point.")
+                        cl.sendText(msg.to, "Type 'cek' to set point.")
 #-----------------------------------------------
 
 #-----------------------------------------------
