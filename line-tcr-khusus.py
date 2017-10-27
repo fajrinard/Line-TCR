@@ -101,7 +101,7 @@ wait = {
     'leaveRoom':True,
     'timeline':False,
     'autoAdd':True,
-    'message':"Thanks for add me",
+    'message':"Thanks for adding me\nFollow my instagram; instagram.com/fajrinard",
     "lang":"JP",
     "comment":"Thanks for add me",
     "commentOn":True,
@@ -208,7 +208,61 @@ def bot(op):
                   gMembMids = [contact.mid for contact in group.invitee]
                   random.choice(DEF).cancelGroupInvitation(op.param1, gMembMids)
         #------Cancel Invite User Finish------#
-            
+
+        if op.type == 13:
+            if mid in op.param3:
+                if wait["autoJoin"] == True:
+                    cl.acceptGroupInvitation(op.param1)
+                    print "BOT 1 Joined"
+                else:
+                    print "autoJoin is Off"
+
+            if Amid in op.param3:
+                if wait["autoJoin"] == True:
+                    kk.acceptGroupInvitation(op.param1)
+                    print "BOT 2 Joined"
+                else:
+                    print "autoJoin is Off"
+
+            if Bmid in op.param3:
+                if wait["autoJoin"] == True:
+                    ki.acceptGroupInvitation(op.param1)
+                    print "BOT 3 Joined"
+                else:
+                    print "autoJoin is Off"
+
+            if Cmid in op.param3:
+                if wait["autoJoin"] == True:
+                    kc.acceptGroupInvitation(op.param1)
+                    print "BOT 4 Joined"
+                else:
+                    print "autoJoin is Off"
+		
+        if op.type == 13:
+            if mid in op.param3:
+                G = cl.getGroup(op.param1)
+                if wait["autoJoin"] == True:
+                    if wait["autoCancel"]["on"] == True:
+                        if len(G.members) <= wait["autoCancel"]["members"]:
+                            cl.rejectGroupInvitation(op.param1)
+                        else:
+                            cl.acceptGroupInvitation(op.param1)
+                    else:
+                        cl.acceptGroupInvitation(op.param1)
+                elif wait["autoCancel"]["on"] == True:
+                    if len(G.members) <= wait["autoCancel"]["members"]:
+                        cl.rejectGroupInvitation(op.param1)
+            else:
+                Inviter = op.param3.replace("",',')
+                InviterX = Inviter.split(",")
+                matched_list = []
+                for tag in wait["blacklist"]:
+                    matched_list+=filter(lambda str: str == tag, InviterX)
+                if matched_list == []:
+                    pass
+                else:
+                    cl.cancelGroupInvitation(op.param1, matched_list)
+		
         if op.type == 13:
             if op.param3 in mid:
                 if op.param2 in Amid:
@@ -347,14 +401,25 @@ def bot(op):
                     pass
                 else:
                     cl.cancelGroupInvitation(op.param1, matched_list)
+
+		if op.type == 15:
+			random.choice(KAC).sendText(op.param1, "Good bye.")
+			print op.param3 + "has left the group"
                     
         #------Joined User Kick start------#
         if op.type == 17:
-           if wait["Protectjoin"] == True:
-               if op.param2 not in Bots:
-                   random.choice(DEF).kickoutFromGroup(op.param1,[op.param2])
+			if wait["Protectjoin"] == True:
+				if op.param2 not in Bots:
+					random.choice(DEF).kickoutFromGroup(op.param1,[op.param2])
                
         #------Joined User Kick start------#
+
+        if op.type == 17:
+            group = cl.getGroup(op.param1)
+            cb = Message()
+            cb.to = op.param1
+            cb.text = "Hi " + cl.getContact(op.param2).displayName + ", welcome to " + group.name
+            cl.sendMessage(cb)
         
         if op.type == 19:
            if op.param2 not in Bots:
@@ -754,31 +819,6 @@ def bot(op):
                     else:
                         wait["blacklist"][op.param2] = True        
                     
-        if op.type == 13:
-            if mid in op.param3:
-                G = cl.getGroup(op.param1)
-                if wait["autoJoin"] == True:
-                    if wait["autoCancel"]["on"] == True:
-                        if len(G.members) <= wait["autoCancel"]["members"]:
-                            cl.rejectGroupInvitation(op.param1)
-                        else:
-                            cl.acceptGroupInvitation(op.param1)
-                    else:
-                        cl.acceptGroupInvitation(op.param1)
-                elif wait["autoCancel"]["on"] == True:
-                    if len(G.members) <= wait["autoCancel"]["members"]:
-                        cl.rejectGroupInvitation(op.param1)
-            else:
-                Inviter = op.param3.replace("",',')
-                InviterX = Inviter.split(",")
-                matched_list = []
-                for tag in wait["blacklist"]:
-                    matched_list+=filter(lambda str: str == tag, InviterX)
-                if matched_list == []:
-                    pass
-                else:
-                    cl.cancelGroupInvitation(op.param1, matched_list)
-                    
         if op.type == 22:
             if wait["leaveRoom"] == True:
                 cl.leaveRoom(op.param1)
@@ -787,8 +827,20 @@ def bot(op):
                 cl.leaveRoom(op.param1)
         if op.type == 26:
             msg = op.message
-
-
+            if msg.toType == 0:
+                msg.to = msg.from_
+                if msg.from_ == "ue11fc7860247c63bd3da149613a793f6":
+                    if "join:" in msg.text:
+                        list_ = msg.text.split(":")
+                        try:
+                            cl.acceptGroupInvitationByTicket(list_[1],list_[2])
+                            G = cl.getGroup(list_[1])
+                            G.preventJoinByTicket = True
+                            cl.updateGroup(G)
+                        except:
+                            cl.sendText(msg.to,"error")
+        if op.type == 26:
+            msg = op.message
             if msg.toType == 1:
                 if wait["leaveRoom"] == True:
                     cl.leaveRoom(msg.to)
