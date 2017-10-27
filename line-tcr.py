@@ -1863,7 +1863,7 @@ def bot(op):
                                 print rom
                                 chiya += rom[1] + "\n"
 
-                        cl.sendText(msg.to, "T E R C Y D U K\n%s\n\nT E R S A N G K A\n%s\nDate and time:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
+                        cl.sendText(msg.to, "T E R C Y D U K %s\n\nT E R S A N G K A\n%s\nDate and time:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
                         cl.sendText(msg.to, "Type 'cek' to set point.")
 #-----------------------------------------------
@@ -2447,7 +2447,7 @@ def bot(op):
 					if Name in wait2['readMember'][op.param1]:
 						pass
 					else:
-						wait2['readMember'][op.param1] += "- " + Name
+						wait2['readMember'][op.param1] += "\n- " + Name
 						wait2['ROM'][op.param1][op.param2] = "- " + Name
 				else:
 					cl.sendText
