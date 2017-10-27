@@ -10,19 +10,19 @@ import time,random,sys,json,codecs,threading,glob,re
 #kk.loginResult()
 
 cl = LINETCR.LINE()
-cl.login(token="EmtihbaUVCx47TdLOEB1.FDfcwWVAQFPNKGHLXbirKq.yNZdR5VqqqUY6qhvwOwqH2R7N2Xl3LhPNPQcYrRc5wE=")
+cl.login(token="EmV4iJGj94n2Y7ZEZlh1.FDfcwWVAQFPNKGHLXbirKq.A+rMojToLBpnG1dlUDmlU6/Odnyq1VDvdV9uAXYVVaw=")
 cl.loginResult()
 
 ki = LINETCR.LINE()
-ki.login(token="EmkPOZM54XNGPpWn7koa.fO+3HooEF7AlGhKpf1kzgG.m7bGFEDLAbmwnOHTfqHpDhRiPSJG04BCEcMyVG0/VXA=")
+ki.login(token="EmN9i5bn9LUdWpSHN3Ba.fO+3HooEF7AlGhKpf1kzgG.81AOIr15wRqqGpLTFEb5vQ/SVMQAFPvUX2dursUUjKo=")
 ki.loginResult()
 
 kk = LINETCR.LINE()
-kk.login(token="Emylb8yiBfdM2z9dNKF5.XX7VWdps4YMJ6fIwz2K59q.Z2me4Fqu7K4dJ8XY8ndgtjpeZnfLQxX0ckiBS908DWc=")
+kk.login(token="EmjTCeOkHnoy4roTOyu5.XX7VWdps4YMJ6fIwz2K59q.tmMN1ZG8o2qu2DQgxJIMgqK+r4QkdW8YCpmj9fSCdJQ=")
 kk.loginResult()
 
 kc = LINETCR.LINE()
-kc.login(token="EmvwpAXy9pWnZCSxggl7.A8ldEaJ2hNX/nDYG13PrnW.2RM09QTR3P9nZxi1tXwKYvtqwTeG//WWPdQ4iHGndfA=")
+kc.login(token="EmdZwFgexOx4ryzf6D77.A8ldEaJ2hNX/nDYG13PrnW.CMmbsh4cy94H9vgFGpFfFiTTwoqwZfSGWtgmfxBDD4o=")
 kc.loginResult()
 
 cl
@@ -92,7 +92,7 @@ Bmid = kk.getProfile().mid
 Cmid = kc.getProfile().mid
 
 Bots=[mid,Amid,Bmid,Cmid,"ue11fc7860247c63bd3da149613a793f6"]
-admin=["ue11fc7860247c63bd3da149613a793f6","u238c8b46c8c4a80504f6eafdf45fcb5f"]
+admin=["ue11fc7860247c63bd3da149613a793f6"]
 admsa=["ue11fc7860247c63bd3da149613a793f6"]
 wait = {
     'contact':False,
@@ -1935,18 +1935,6 @@ def bot(op):
                         kk.acceptGroupInvitationByTicket(msg.to,Ticket)
                         time.sleep(0.2)
                         kc.acceptGroupInvitationByTicket(msg.to,Ticket)
-                        time.sleep(0.2)
-                        ks.acceptGroupInvitationByTicket(msg.to,Ticket)
-                        time.sleep(0.2)
-                        ka.acceptGroupInvitationByTicket(msg.to,Ticket)
-                        time.sleep(0.2)
-                        kb.acceptGroupInvitationByTicket(msg.to,Ticket)
-                        time.sleep(0.2)
-                        ko.acceptGroupInvitationByTicket(msg.to,Ticket)
-                        time.sleep(0.2)
-                        ke.acceptGroupInvitationByTicket(msg.to,Ticket)
-                        time.sleep(0.2)
-                        ku.acceptGroupInvitationByTicket(msg.to,Ticket)
                         time.sleep(0.2)
                         G = cl.getGroup(msg.to)
                         G.preventJoinByTicket = True
