@@ -4,7 +4,6 @@ import LINETCR
 from LINETCR.lib.curve.ttypes import *
 from datetime import datetime
 import time,random,sys,json,codecs,threading,glob,re
-[Get music: Lib line-py]
 import requests, urllib, json
 
 #kk = LINETCR.LINE()
