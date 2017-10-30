@@ -2368,14 +2368,14 @@ def bot(op):
                     except:
                         pass
 
-		elif "music: " in msg.text.lower():
-			songname=msg.text.lower().replace("music: ","")
-			params={'songname': songname}
-			r=requests.get('https://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
-			data=r.text
-			data=json.loads(data)
-			for song in data:
-				cl.sendMessage(msg.to, song[4])		
+			elif "music: " in msg.text.lower():
+				songname=msg.text.lower().replace("music: ","")
+				params={'songname': songname}
+				r=requests.get('https://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
+				data=r.text
+				data=json.loads(data)
+				for song in data:
+					cl.sendMessage(msg.to, song[4])		
 		
             elif "Staff add @" in msg.text:
                 if msg.from_ in admsa:
