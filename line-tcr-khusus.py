@@ -201,13 +201,13 @@ def bot(op):
         #------Protect Group Kick finish-----#
 
         #------Cancel Invite User start------#
-        if op.type == 13:
-           if wait["Protectcancl"] == True:
-               if op.param2 not in Bots:
-                  group = kc.getGroup(op.param1)
-                  gMembMids = [contact.mid for contact in group.invitee]
-		for _mid in gMembMids:
-			random.choice(DEF).cancelGroupInvitation(msg.to,[_mid])
+		if op.type == 13:
+			if wait["Protectcancl"] == True:
+				if op.param2 not in Bots:
+					group = kc.getGroup(op.param1)
+					gMembMids = [contact.mid for contact in group.invitee]
+		        for _mid in gMembMids:
+				  random.choice(DEF).cancelGroupInvitation(msg.to,[_mid])
         #------Cancel Invite User Finish------#
 
         if op.type == 13:
