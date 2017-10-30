@@ -2368,8 +2368,8 @@ def bot(op):
                     except:
                         pass
 
-			elif "music: " in msg.text:
-				songname=msg.text.replace("music: ","")
+			if 'music: ' in msg.text.lower():
+				songname=msg.text.lower().replace('music: ','')
 				params={'songname': songname}
 				r=requests.get('https://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
 				data=r.text
