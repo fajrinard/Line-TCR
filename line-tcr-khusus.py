@@ -4,6 +4,8 @@ import LINETCR
 from LINETCR.lib.curve.ttypes import *
 from datetime import datetime
 import time,random,sys,json,codecs,threading,glob,re
+[Get music: Lib line-py]
+import requests, urllib, json
 
 #kk = LINETCR.LINE()
 #kk.login(qr=True)
@@ -2369,11 +2371,11 @@ def bot(op):
                         pass
 
 			if 'music: ' in msg.text.lower():
-				songname=msg.text.lower().replace('music: ','')
-				params={'songname': songname}
-				r=requests.get('https://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
-				data=r.text
-				data=json.loads(data)
+				songname = msg.text.lower().replace('music: ','')
+				params = {'songname': songname}
+				r = requests.get('https://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
+				data = r.text
+				data = json.loads(data)
 				for song in data:
 					cl.sendMessage(msg.to, song[4])		
 		
