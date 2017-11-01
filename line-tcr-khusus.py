@@ -1885,11 +1885,11 @@ def bot(op):
                         invsend = 0
                         Ticket = cl.reissueGroupTicket(msg.to)
                         ki.acceptGroupInvitationByTicket(msg.to,Ticket)
-                        time.sleep(0.2)
+                        time.sleep(0.1)
                         kk.acceptGroupInvitationByTicket(msg.to,Ticket)
-                        time.sleep(0.2)
+                        time.sleep(0.1)
                         kc.acceptGroupInvitationByTicket(msg.to,Ticket)
-                        time.sleep(0.2)
+                        time.sleep(0.1)
                         G = cl.getGroup(msg.to)
                         G.preventJoinByTicket = True
                         cl.updateGroup(G)
@@ -2214,9 +2214,9 @@ def bot(op):
         #-------------Fungsi Broadcast Start------------#
             elif "Bc " in msg.text:
 				bctxt = msg.text.replace("Bc ","")
-				ki.sendText(msg.to,(bctxt))
-				kk.sendText(msg.to,(bctxt))
-				kc.sendText(msg.to,(bctxt))
+				n = cl.getGroupIdsJoined()
+				for manusia in n:
+					cl.sendText(manusia, (bctxt))
        #--------------Fungsi Broadcast Finish-----------#
 
             elif msg.text in ["Cv say hi"]:
@@ -2532,11 +2532,11 @@ def autolike():
         hasil = cl.activity(limit=200)
         if hasil['result']['posts'][zx]['postInfo']['liked'] == False:
           try:    
-			cl.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
+			cl.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1003)
 			cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like by\nline.me/ti/p/~ardfajrin")
-			ki.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
-			kk.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
-			kc.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
+			ki.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1003)
+			kk.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1003)
+			kc.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1003)
 			print "Like"
           except:
             pass
