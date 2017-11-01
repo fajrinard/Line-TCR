@@ -2368,17 +2368,25 @@ def bot(op):
                     try:
                         cl.sendText(msg.to,str(e))
                     except:
-                        pass
+						pass
 
-			if 'music: ' in msg.text.lower():
-				songname = msg.text.lower().replace('music: ','')
-				params = {'songname': songname}
-				r = requests.get('https://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
-				data = r.text
-				data = json.loads(data)
-				for song in data:
-					cl.sendMessage(msg.to, song[4])		
-		
+            elif msg.text in ["Bot Like", "Bot like"]:
+                if msg.from_ in admin:
+                    print "[Command]Like executed"
+                    cl.sendText(msg.to,"Trying to Like post(s)")
+                    try:
+                        likePost()
+                    except:
+                        pass							
+							
+            elif msg.text in ["List group"]:
+              if msg.from_ in admin:
+				gid = cl.getGroupIdsJoined()
+				h = ""
+				for i in gid:
+					h += "%s\n" % (cl.getGroup(i).name +" → ["+str(len(cl.getGroup(i).members))+"]")
+				cl.sendText(msg.to,"-- List Group --\n\n"+ h +"Group Total =" +" ["+str(len(gid))+"]")
+												
             elif "Staff add @" in msg.text:
                 if msg.from_ in admsa:
                     print "[Command]Staff add executing"
@@ -2543,7 +2551,7 @@ def autolike():
             pass
         else:
             print "Already Liked"
-     time.sleep(500)
+     time.sleep(200)
 thread2 = threading.Thread(target=autolike)
 thread2.daemon = True
 thread2.start()
