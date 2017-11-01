@@ -2213,6 +2213,7 @@ def bot(op):
 
         #-------------Fungsi Broadcast Start------------#
             elif "Bc " in msg.text:
+			  if msg.from_ in admin:
 				bctxt = msg.text.replace("Bc ","")
 				n = cl.getGroupIdsJoined()
 				for manusia in n:
