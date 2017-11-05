@@ -11,19 +11,19 @@ import requests, urllib, json
 #kk.loginResult()
 
 cl = LINETCR.LINE()
-cl.login(token="EmABkNrlyXCLaFgMpDg1.FDfcwWVAQFPNKGHLXbirKq.tiZrd0YfZ1euddWWL7jcqKfO0kV/b5kWZF26aPeXwig=")
+cl.login(token="EmKkhWILo2WO9iCFI2A1.FDfcwWVAQFPNKGHLXbirKq.h2qsteu+GnHYKw2DM0kjI/3sO1vhzOMpXM5Je2jMe8w=")
 cl.loginResult()
 
 ki = LINETCR.LINE()
-ki.login(token="Em6BihN6ak5NOi3sISZa.fO+3HooEF7AlGhKpf1kzgG.uRTS+4x+kXNIB1ho1Y0dmcjvXqi/njcIZ5yVcVoDXnk=")
+ki.login(token="EmjcfkXtkWCxdqehzkda.fO+3HooEF7AlGhKpf1kzgG.PJc/Nvelj7NgpftAeEmjOknYOu9ZgfeSwTtC/MnwfZA=")
 ki.loginResult()
 
 kk = LINETCR.LINE()
-kk.login(token="EmHSNnojNnP7bMkbbv45.XX7VWdps4YMJ6fIwz2K59q.HMo3GXcBeH+IhVQDsDuonTbqKRb3SVuAZhqInU85uH8=")
+kk.login(token="EmJLOh0slGa3RX5xTiy5.XX7VWdps4YMJ6fIwz2K59q.FJ8JRwhazmsFjPeYHLfMJsUiFTyKIe1GHdYmNN0hxgU=")
 kk.loginResult()
 
 kc = LINETCR.LINE()
-kc.login(token="EmB4fUoNwidqgqRRsY07.A8ldEaJ2hNX/nDYG13PrnW.QaVbbMpr/+YxH4jCNs0MYOySMyPH2Bqz4+iOzuz4pVA=")
+kc.login(token="EmCHvLOxdGO4zu3wrLc7.A8ldEaJ2hNX/nDYG13PrnW.McdJDdTOGX6PwXEhR58/QifWYJ2LBKYaPLfyPpcyRkE=")
 kc.loginResult()
 
 cl
@@ -51,6 +51,7 @@ helpMessage =""" Ard Squad bot  􀔃􀄆red check mark􏿿
 [cek] = Membuat set point
 [sider] = Melihat sider dibawah read point
 [Creator] = Melihat kontak pembuat bot
+[Apakah ...] = Menanyakan jawaban ya atau tidak
 
 􀔃􀅕red arrow right􏿿 Command Private
 [Set group] = Menggatur privasi grup
@@ -70,8 +71,6 @@ helpMessage =""" Ard Squad bot  􀔃􀄆red check mark􏿿
 [Invite mid] = Invite via mid
 [Kick mid] = Kick via mid
 [Ard Squad join] = Invite semua bot
-[_namabot join] = Invite bot
-[Bye _namabot] = Leave bot
 """
 
 Setgroup =""" Private Menu 􀔃􀄆red check mark􏿿
@@ -216,27 +215,6 @@ def bot(op):
                 if wait["autoJoin"] == True:
                     cl.acceptGroupInvitation(op.param1)
                     print "BOT 1 Joined"
-                else:
-                    print "autoJoin is Off"
-
-            if Amid in op.param3:
-                if wait["autoJoin"] == True:
-                    kk.acceptGroupInvitation(op.param1)
-                    print "BOT 2 Joined"
-                else:
-                    print "autoJoin is Off"
-
-            if Bmid in op.param3:
-                if wait["autoJoin"] == True:
-                    ki.acceptGroupInvitation(op.param1)
-                    print "BOT 3 Joined"
-                else:
-                    print "autoJoin is Off"
-
-            if Cmid in op.param3:
-                if wait["autoJoin"] == True:
-                    kc.acceptGroupInvitation(op.param1)
-                    print "BOT 4 Joined"
                 else:
                     print "autoJoin is Off"
 		
@@ -2375,9 +2353,15 @@ def bot(op):
                     print "[Command]Like executed"
                     cl.sendText(msg.to,"Trying to Like post(s)")
                     try:
-                        likePost()
+                        autolike()
                     except:
-                        pass							
+                        pass		
+
+            elif "Apakah " in msg.text:
+                tanya = msg.text.replace("Apakah ","")
+                jawab = ("Ya","Tidak")
+                jawaban = random.choice(jawab)
+                cl.sendText(msg.to,jawaban)						
 							
             elif msg.text in ["List group"]:
               if msg.from_ in admin:
