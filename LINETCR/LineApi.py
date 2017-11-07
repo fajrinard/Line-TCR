@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from Api import Poll, Talk, channel
 from lib.curve.ttypes import *
-
+import requests
+import shutil
+import json
 def def_callback(str):
     print(str)
 
@@ -18,6 +20,7 @@ class LINE:
 
   def __init__(self):
     self.Talk = Talk()
+    self._session = requests.session()
 
   def login(self, mail=None, passwd=None, cert=None, token=None, qr=False, callback=None):
     if callback is None:
@@ -35,12 +38,16 @@ class LINE:
       raise Exception("invalid arguments")
 
     self.authToken = self.Talk.authToken
+    self._headers = {'X-Line-Application': 'DESKTOPMAC 10.10.2-YOSEMITE-x64    MAC 4.5.0', 'X-Line-Access': self.authToken, 'User-Agent': 'Line/6.0.0 iPad4,1 9.0.2'}
     self.cert = self.Talk.cert
-
+    self._headers = {
+              'X-Line-Application': 'DESKTOPMAC 10.10.2-YOSEMITE-x64    MAC 4.5.0', 
+              'X-Line-Access': self.authToken, 
+              'User-Agent': 'Line/6.0.0 iPad4,1 9.0.2'
+   }
     self.Poll = Poll(self.authToken)
     self.channel = channel.Channel(self.authToken)
-    self.channel.login()
-
+    self.channel.login()	
     self.mid = self.channel.mid
     self.channel_access_token = self.channel.channel_access_token
     self.token = self.channel.token
@@ -65,6 +72,20 @@ class LINE:
   def updateSettings(self, settingObject):
     return self.Talk.client.updateSettings(0, settingObject)
 
+  def updateSettings(self, settingObject):
+    return self.Talk.client.updateSettings(0, settingObject)
+
+  def CloneContactProfile(self, mid):
+    contact = self.getContact(mid)
+    profile = self.getProfile()
+    profile.displayName = contact.displayName
+    profile.statusMessage = contact.statusMessage
+    profile.pictureStatus = contact.pictureStatus
+    self.updateDisplayPicture(profile.pictureStatus)
+    return self.updateProfile(profile)
+
+  def updateDisplayPicture(self, hash_id):
+    return self.Talk.client.updateProfileAttribute(0, 8, hash_id)
 
   """Operation"""
 
@@ -91,11 +112,14 @@ class LINE:
         msg.text = text
 
         return self.Talk.client.sendMessage(0, msg)
+  def post_content(self, url, data=None, files=None):
+        return self._session.post(url, headers=self._headers, data=data, files=files)
+
   def sendImage(self, to_, path):
-        M = Message(to=to_,contentType = 1)
+        M = Message(to=to_, text=None, contentType = 1)
         M.contentMetadata = None
         M.contentPreview = None
-        M_id = self._client.sendMessage(M).id
+        M_id = self.Talk.client.sendMessage(0,M).id
         files = {
             'file': open(path, 'rb'),
         }
@@ -107,13 +131,39 @@ class LINE:
             'ver': '1.0',
         }
         data = {
-            'params': json.dumps(params)
-        }
-        r = self._client.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+            'params': json.dumps(params)            
+        }       
+
+        r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+        print r
         if r.status_code != 201:
             raise Exception('Upload image failure.')
-        #r.content
         return True
+
+  def sendImageWithURL(self, to_, url):
+        """Send a image with given image url
+
+        :param url: image url to send
+        """
+        path = 'tmp/pythonLine.data'
+
+        r = requests.get(url, stream=True)
+        if r.status_code == 200:
+            with open(path, 'wb') as f:
+                shutil.copyfileobj(r.raw, f)
+        else:
+            raise Exception('Download image failure.')
+
+        try:
+            self.sendImage(to_, path)
+        except Exception as e:
+            raise e
+            
+  def getCover(self,mid):
+        h = self.getHome(mid)
+        objId = h["result"]["homeInfo"]["objectId"]
+        return "http://dl.profile.line-cdn.net/myhome/c/download.nhn?userid=" + mid + "&oid=" + objId
+			
   def sendEvent(self, messageObject):
         return self._client.sendEvent(0, messageObject)
 
@@ -291,6 +341,20 @@ class LINE:
 
   def createAlbum2(self, gid, name, path):
       return self.channel.createAlbum(gid, name, path, oid)
+      
+  """Personalize"""
+    
+  def cloneContactProfile(self, mid):
+      contact = self.getContact(mid)
+      profile = self.getProfile()
+      profile.displayName = contact.displayName
+      profile.statusMessage = contact.statusMessage
+      profile.pictureStatus = contact.pictureStatus
+      self.updateDisplayPicture(profile.pictureStatus)
+      return self.updateProfile(profile)
+  
+  def updateDisplayPicture(self, hash_id):
+      return self.Talk.client.updateProfileAttribute(0, 8, hash_id)
 
 
   def __validate(self, mail, passwd, cert, token, qr):
@@ -311,7 +375,7 @@ class LINE:
 
       prof = self.getProfile()
 
-      print("R.A-BOT")
+      print("MikanBOT")
       print("mid -> " + prof.mid)
       print("name -> " + prof.displayName)
       print("authToken -> " + self.authToken)
