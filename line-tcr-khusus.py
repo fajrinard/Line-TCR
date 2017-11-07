@@ -1454,16 +1454,16 @@ def bot(op):
         #-------------Fungsi Spam Start---------------------#
             elif msg.text in ["Up","up","Up Chat","Up chat","up chat","Upchat","upchat"]:
                 cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
-                ki.sendText(msg.to,"􀔃􀆶squared up!􏿿")
-                kk.sendText(msg.to,"􀔃􀆶squared up!􏿿")
                 cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
-                ki.sendText(msg.to,"􀔃􀆶squared up!􏿿")
-                kk.sendText(msg.to,"􀔃􀆶squared up!􏿿")
                 cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
-                ki.sendText(msg.to,"􀔃􀆶squared up!􏿿")
-                kk.sendText(msg.to,"􀔃􀆶squared up!􏿿")
                 cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
-                ki.sendText(msg.to,"􀔃􀆶squared up!􏿿")
+                cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
+                cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
+                cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
+                cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
+                cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
+                cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
+                cl.sendText(msg.to,"􀔃􀆶squared up!􏿿")
         #-------------Fungsi Spam Finish---------------------#
 
         #-------------Fungsi Broadcast Start------------#
