@@ -1622,8 +1622,8 @@ def bot(op):
                 else:
                     cl.sendText(msg.to,"He declined all invitations")
 						
-            elif "Steal dp @" in msg.text:            
-                   print "[Command]dp executing"
+            elif "Steal cover @" in msg.text:            
+                   print "[Command]cover executing"
                    _name = msg.text.replace("Steal dp @","")
                    _nametarget = _name.rstrip('  ')
                    gs = cl.getGroup(msg.to)
@@ -1636,13 +1636,29 @@ def bot(op):
                    else:
                        for target in targets:
                            try:
-                               contact = cl.getContact(target)
-                               path = "http://dl.profile.line-cdn.net/" + contact.pictureStatus
-                               cl.sendImageWithURL(msg.to,path)
+                               cover = cl.channel.getCover(target)
+                               cl.sendImageWithURL(msg.to,cover)
                            except:
                                pass
-                   print "[Command]dp executed"
-						
+                   print "[Command]cover executed"
+
+            elif "Group pict" in msg.text:            
+				print "[command]steal executing"
+				group = cl.getGroup(msg.to)
+				path = "http://dl.profile.line-cdn.net/" + group.pictureStatus
+				cl.sendImageWithURL(msg.to,path)
+				print "[command]steal executed"
+
+            elif "Mid @" in msg.text:
+                _name = msg.text.replace("Mid @","")
+                _nametarget = _name.rstrip(' ')
+                gs = cl.getGroup(msg.to)
+                for g in gs.members:
+                    if _nametarget == g.displayName:
+                        cl.sendText(msg.to, g.mid)
+                    else:
+                        pass
+							
             elif msg.text in ["List group"]:
               if msg.from_ in admin:
 				gid = cl.getGroupIdsJoined()
@@ -1717,10 +1733,10 @@ def bot(op):
                     print "[Command]Stafflist executed"
 		
             elif "Apakah " in msg.text:
-                tanya = msg.text.replace("Apakah ","")
-                jawab = ("Ya","Tidak")
-                jawaban = random.choice(jawab)
-                cl.sendText(msg.to,jawaban)
+				tanya = msg.text.replace("Apakah ","")
+				jawab = ("Ya","Tidak")
+				jawaban = random.choice(jawab)
+				cl.sendText(msg.to,jawaban)
 						
         if op.type == 55:
             try:
@@ -1825,70 +1841,6 @@ def autolike():
 thread2 = threading.Thread(target=autolike)
 thread2.daemon = True
 thread2.start()
-
-def sendImage(self, to_, path):
-      M = Message(to=to_, text=None, contentType = 1)
-      M.contentMetadata = None
-      M.contentPreview = None
-      M2 = self._client.sendMessage(0,M)
-      M_id = M2.id
-      files = {
-         'file': open(path, 'rb'),
-      }
-      params = {
-         'name': 'media',
-         'oid': M_id,
-         'size': len(open(path, 'rb').read()),
-         'type': 'image',
-         'ver': '1.0',
-      }
-      data = {
-         'params': json.dumps(params)
-      }
-      r = self.post_content('https://obs-sg.line-apps.com/talk/m/upload.nhn', data=data, files=files)
-      if r.status_code != 201:
-         raise Exception('Upload image failure.')
-      return True
-
-def sendImage2(self, to_, path):
-      M = Message(to=to_,contentType = 1)
-      M.contentMetadata = None
-      M.contentPreview = None
-      M_id = self._client.sendMessage(M).id
-      files = {
-         'file': open(path, 'rb'),
-      }
-      params = {
-         'name': 'media',
-         'oid': M_id,
-         'size': len(open(path, 'rb').read()),
-         'type': 'image',
-         'ver': '1.0',
-      }
-      data = {
-         'params': json.dumps(params)
-      }
-      r = self._client.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
-      if r.status_code != 201:
-         raise Exception('Upload image failure.')
-      return True
-
-
-def sendImageWithURL(self, to_, url):
-      path = '%s/pythonLine-%i.data' % (tempfile.gettempdir(), randint(0, 9))
-      r = requests.get(url, stream=True)
-      if r.status_code == 200:
-         with open(path, 'w') as f:
-            shutil.copyfileobj(r.raw, f)
-      else:
-         raise Exception('Download image failure.')
-      try:
-         self.sendImage(to_, path)
-      except:
-         try:
-            self.sendImage(to_, path)
-         except Exception as e:
-            raise e
 
 while True:
     try:
