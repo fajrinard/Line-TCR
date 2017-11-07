@@ -1621,26 +1621,6 @@ def bot(op):
                     cl.sendText(msg.to,"Ard bot leaving all groups.")
                 else:
                     cl.sendText(msg.to,"He declined all invitations")
-						
-            elif "Steal cover @" in msg.text:            
-                   print "[Command]cover executing"
-                   _name = msg.text.replace("Steal dp @","")
-                   _nametarget = _name.rstrip('  ')
-                   gs = cl.getGroup(msg.to)
-                   targets = []
-                   for g in gs.members:
-                       if _nametarget == g.displayName:
-                           targets.append(g.mid)
-                   if targets == []:
-                       ki.sendText(msg.to,"Contact not found")
-                   else:
-                       for target in targets:
-                           try:
-                               cover = cl.channel.getCover(target)
-                               cl.sendImageWithURL(msg.to,cover)
-                           except:
-                               pass
-                   print "[Command]cover executed"
 
             elif "Group pict" in msg.text:            
 				print "[command]steal executing"
@@ -1665,7 +1645,7 @@ def bot(op):
 				h = ""
 				for i in gid:
 					h += "%s\n" % (cl.getGroup(i).name +" → ["+str(len(cl.getGroup(i).members))+"]")
-				cl.sendText(msg.to,"-- List Group --\n\n"+ h +"Group Total =" +" ["+str(len(gid))+"]")
+				cl.sendText(msg.to,"-- List Groups --\n\n"+ h +"\nTotal groups =" +" ["+str(len(gid))+"]")
 												
             elif "Staff add @" in msg.text:
                 if msg.from_ in admsa:
