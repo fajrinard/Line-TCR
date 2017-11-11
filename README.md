@@ -21,3 +21,11 @@ Cara Run bot tanpa pc atau di Android :
 - python2 line-tcr.py
 - (login link/qr ke akun bot)
 - Selesai
+
+
+Thanks to :
+- merkremont
+- AlfathDirk
+- team TCR
+
+#ArdSquadBot
