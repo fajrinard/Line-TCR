@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from Api import Poll, Talk, channel
 from lib.curve.ttypes import *
-import requests
+from random import randint
+import requests,tempfile
 import shutil
 import json
 def def_callback(str):
@@ -112,9 +113,31 @@ class LINE:
         msg.text = text
 
         return self.Talk.client.sendMessage(0, msg)
-  def post_content(self, url, data=None, files=None):
+  def postContent(self, url, data=None, files=None):
         return self._session.post(url, headers=self._headers, data=data, files=files)
 
+  def downloadFileURL(self, fileUrl):
+        saveAs = '%s/linepy-%i.data' % (tempfile.gettempdir(), randint(0, 9))
+        r = self.server.getContent(fileUrl)
+        if r.status_code == 200:
+            with open(saveAs, 'wb') as f:
+				shutil.copyfileobj(r.raw, f)			
+				return saveAs
+        else:
+            raise Exception('Download file failure.')
+
+  def downloadObjectMsgId(self, messageId):
+        saveAs = '%s/%s-%i.bin' % (tempfile.gettempdir(), messageId, randint(0, 9))
+        params = {'oid': messageId}
+        url = self.server.urlEncode('https://obs.line-apps.com', '/talk/m/download.nhn', params)
+        r = self.server.getContent(url)
+        if r.status_code == 200:
+            with open(saveAs, 'wb') as f:
+				shutil.copyfileobj(r.raw, f)			
+				return saveAs
+        else:
+            raise Exception('Download file failure.')		
+		
   def sendImage(self, to_, path):
         M = Message(to=to_, text=None, contentType = 1)
         M.contentMetadata = None
@@ -134,7 +157,7 @@ class LINE:
             'params': json.dumps(params)            
         }       
 
-        r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+        r = self.postContent('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
         print r
         if r.status_code != 201:
             raise Exception('Upload image failure.')
@@ -163,6 +186,110 @@ class LINE:
         h = self.getHome(mid)
         objId = h["result"]["homeInfo"]["objectId"]
         return "http://dl.profile.line-cdn.net/myhome/c/download.nhn?userid=" + mid + "&oid=" + objId
+		
+  def sendVideo(self, to, path):
+        contentMetadata = {
+            'VIDLEN' : '60000',
+            'DURATION' : '60000'
+        }
+        objectId = self.sendMessage(to=to, text=None, contentMetadata=contentMetadata, contentType = 2).id
+        files = {
+            'file': open(path, 'rb')
+        }
+        params = {
+            'name': 'media',
+            'oid': objectId,
+            'size': len(open(path, 'rb').read()),
+            'type': 'video',
+            'ver': '1.0',
+        }
+        data = {
+            'params': json.dumps(params)
+        }
+        r = self.postContent('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+        if r.status_code != 201:
+            raise Exception('Upload video failure.')
+        return True
+
+  def sendVideoWithURL(self, to, url):
+        path = self.downloadFileURL(url)
+        try:
+            return self.sendVideo(to, path)
+        except:
+            raise Exception('Send video failure.')
+
+  def sendAudio(self, to_, path):
+		M = Message(to=to_,text=None,contentType=3)
+		M.contentMetadata = {
+		}
+		M.contentPreview = None
+		M_Id = self.Talk.client.sendMessage(0,M).id
+		files = {
+			'file': open(path, 'rb'),
+		}
+		params = {
+			'name': 'media',
+			'oid': M_Id,
+			'size': len(open(path, 'rb').read()),
+			'type': 'audio',
+			'ver': '1.0',
+		}
+		data = {
+			'params': json.dumps(params)
+		}
+		r = self.postContent('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+		if r.status_code != 201:
+			raise Exception('Upload audio failure.')
+		return True
+
+  def sendAudioWithURL(self, to_, url, header=None):
+		path = '%s/linepy-%i.data' % (tempfile.gettempdir(), randint(0, 9))
+		r = requests.get(url, stream=True,headers=header)
+		if r.status_code == 200:
+			with open(path, 'wb') as f:
+				shutil.copyfileobj(r.raw, f)
+		else:
+			print r.status_code
+			raise Exception('Download audio failure.')
+		try:
+			self.sendAudio(to_, path)
+		except Exception as e:
+			raise e
+
+  def sendFile(self, to, path, file_name=''):
+        if file_name == '':
+            import ntpath
+            file_name = ntpath.basename(path)
+        file_size = len(open(path, 'rb').read())
+        contentMetadata = {
+            'FILE_NAME' : str(file_name),
+            'FILE_SIZE' : str(file_size)
+        }
+        objectId = self.sendMessage(to=to, text=None, contentMetadata=contentMetadata, contentType = 14).id
+        files = {
+            'file': open(path, 'rb'),
+        }
+        params = {
+            'name': file_name,
+            'oid': objectId,
+            'size': file_size,
+            'type': 'file',
+            'ver': '1.0',
+        }
+        data = {
+            'params': json.dumps(params)
+        }
+        r = self.postContent('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+        if r.status_code != 201:
+            raise Exception('Upload file failure.')
+        return True
+
+  def sendFileWithURL(self, to, url, fileName=''):
+        path = self.downloadFileURL(url)
+        try:
+            return self.sendFile(to, path, fileName)
+        except:
+            raise Exception('Send file failure.')
 			
   def sendEvent(self, messageObject):
         return self._client.sendEvent(0, messageObject)
@@ -375,7 +502,7 @@ class LINE:
 
       prof = self.getProfile()
 
-      print("MikanBOT")
+      print("Ard Bot")
       print("mid -> " + prof.mid)
       print("name -> " + prof.displayName)
       print("authToken -> " + self.authToken)
