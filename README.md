@@ -1,10 +1,9 @@
 # Line-TCR
-Line Bot TCR fixed
-1 bot utama & 3 bot assist
+Line Bot TCR fixed\n1 bot utama & 3 bot assist
 
 Requirements:
 - 4 Line Clone untuk bot
-- 1 Line utama untuk admin
+- 1 Line utama untuk admin/command
 
 Cara Run bot tanpa pc atau di Android :
 - (Download Termux & Install)
