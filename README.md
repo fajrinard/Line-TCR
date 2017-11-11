@@ -1,5 +1,6 @@
 # Line-TCR
-Line Bot TCR
+Line Bot TCR fixed
+1 bot utama & 3 bot assist
 
 Requirements:
 - 4 Line Clone untuk bot
@@ -24,8 +25,10 @@ Cara Run bot tanpa pc atau di Android :
 
 
 Thanks to :
+- Allah SWT
 - merkremont
 - AlfathDirk
 - team TCR
+- dan para mastah/programmer lainnya
 
 #ArdSquadBot
