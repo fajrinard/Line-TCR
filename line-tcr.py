@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import LINETCR
 from LINETCR.lib.curve.ttypes import *
 from LINETCR import server
@@ -8,10 +6,6 @@ import time,random,sys,json,codecs,threading,glob,requests,urllib
 import re,string,os,shutil,urllib2,urllib3,subprocess
 from urllib import urlopen
 import requests,tempfile
-
-#kk = LINETCR.LINE()
-#kk.login(qr=True)
-#kk.loginResult()
 
 cl = LINETCR.LINE()
 cl.login(qr=True)
@@ -28,8 +22,6 @@ kk.loginResult()
 kc = LINETCR.LINE()
 kc.login(qr=True)
 kc.loginResult()
-
-cl
 
 print "login success"
 reload(sys)
@@ -236,20 +228,20 @@ def bot(op):
         #------Cancel Invite User start------#
         #------Cancel Invite User Finish------#
 
-		if op.type == 13:
+	if op.type == 13:
 			if wait["Protectcancl"] == True:
 				try:
 					X = ki.getGroup(op.param1)
 					gInviMids = [contact.mid for contact in X.invitee]
 					ki.cancelGroupInvitation(op.param1, gInviMids)
-					print gInviMids + "invite canceled"
+					print "invite canceled"
 				except:
 					try:
 						print "Retry canceling invitation"
-						X = ki.getGroup(op.param1)
+						X = kk.getGroup(op.param1)
 						gInviMids = [contact.mid for contact in X.invitee]
-						ki.cancelGroupInvitation(op.param1, gInviMids)
-						print gInviMids + "invite canceled"
+						kk.cancelGroupInvitation(op.param1, gInviMids)
+						print "invite canceled"
 					except:
 						print "Bot can't cancel the invitation"
 		
@@ -604,7 +596,7 @@ def bot(op):
                 if wait["timeline"] == True:
 					msg.contentType = 0
 					msg.text = "post URL\n" + msg.contentMetadata["postEndUrl"]
-					cl.sendText(msg.to,msg.text)
+					cl.sendMessage(msg)
             elif msg.text is None:
                 return
             elif msg.text.lower() == 'help':
