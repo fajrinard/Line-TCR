@@ -13,7 +13,6 @@ from curve.ttypes import *
 
 class Talk:
   client = None
-
   auth_query_path = "/api/v4/TalkService.do";
   http_query_path = "/S4";
   wait_for_mobile_path = "/Q";
@@ -21,7 +20,7 @@ class Talk:
   port = 443;
 
   UA = "Line/6.0.0 iPad4,1 9.0.2"
-  LA = "DESKTOPMAC 10.10.2-YOSEMITE-x64    MAC 4.5.0"
+  LA = "IOSIPAD\t7.14.0\tiPhone OS\t10.12.0"
 
   authToken = None
   cert = None
@@ -90,7 +89,7 @@ class Talk:
     self.transport.path = self.auth_query_path
 
     qr = self.client.getAuthQrcode(True, "Ard Bot")
-    callback("#ArdSquadBot\n\nCopy to Line and Click\nYour LINK QR is: line://au/q/" + qr.verifier)
+    callback("Copy to Line and Click\nYour LINK QR is: line://au/q/" + qr.verifier)
 
     r = requests.get("https://" + self.host + self.wait_for_mobile_path, headers={
       "X-Line-Application": self.LA,
